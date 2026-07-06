@@ -2,16 +2,6 @@
 
 > **Design and simulate a Distributed Arithmetic FIR filter in Python to isolate the mu rhythm (8–13 Hz) from a single-channel motor imagery EEG signal (C3, PhysioNet dataset), implementing fixed-point arithmetic and LUT-based accumulation faithful to FPGA hardware constraints, with RTL synthesis via MATLAB HDL Coder.**
 
----
-
-## Project Status
-
-| Phase | Status | Description |
-|-------|--------|-------------|
-| Phase 1 — Behavioral Simulation | ✅ Complete | Python DA FIR on real PhysioNet EEG |
-| Phase 2 — RTL Implementation | ✅ Complete | Verilog generated via MATLAB HDL Coder |
-
----
 
 ## Key Results
 
@@ -42,37 +32,7 @@ The filter improves mu-band SNR from **-7.90 dB** (raw) to **49.31 dB** (filtere
 
 **Context:** Preprocessing stage for a real-time motor imagery BCI pipeline.
 
----
 
-## Repository Structure
-
-```
-da-fir-bandpass-eeg/
-├── notebook/
-│   └── firfilter.ipynb              ← Full Python pipeline — data to verification
-├── matlab/
-│   ├── scripts/
-│   │   └── script_firfilter.m       ← Filter analysis + automated Simulink generation
-│   ├── simulink/
-│   │   └── CUSTOM_DA_FIR_final.slx  ← DA FIR Simulink model (HDL Coder ready)
-│   └── hdl_output/
-│       ├── da_fir_bandpass.v        ← Generated synthesizable Verilog
-│       ├── da_fir_bandpass_tb.v     ← Generated testbench
-│       ├── da_fir_bandpass_val.slx  ← HDL Coder validation model
-│       └── filter_response_plot.png ← MATLAB verification panel
-├── data/
-│   └── filter_coefficients.mat      ← Exported float64 + Q15 int16 coefficients
-├── results/
-│   ├── filter_design/               ← Frequency response, group delay, compliance
-│   ├── quantization/                ← Q15 error analysis, tap deviation plots
-│   ├── verification/                ← Impulse, step, settling transient
-│   ├── surface_laplacian/           ← CSD analysis, spectral power ratio
-│   └── results/                     ← Final filtered output, PSD, SNR
-└── docs/
-    └── report.md                    ← Engineering design document
-```
-
----
 
 ## Pipeline Overview
 
