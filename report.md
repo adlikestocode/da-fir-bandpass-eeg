@@ -45,11 +45,11 @@ PhysioNet EEG Motor Movement/Imagery Dataset. Subject 1, resting state recording
 
 Rather than assuming standard mu band boundaries (8–13 Hz), filter cutoff frequencies were derived from the measured PSD of the C3 channel. The -3 dB points of the observed mu peak were identified at **8.36 Hz** and **12.42 Hz**, establishing the passband from data.
 
-![Raw EEG PSD](../results/filter_design/raw_eeg_psd.png)
+![Raw EEG PSD](assets/raw_eeg_psd.png.png)
 
 Pre-filter SNR analysis quantified the noise problem: mu-band signal power at -87.20 dB vs low-frequency noise power at -80.52 dB, giving a pre-filter SNR of **-6.68 dB**. This justified the filtering requirement formally.
 
-![Pre-Filter SNR](../results/filter_design/prefilter_snr.png)
+![Pre-Filter SNR](assets/prefilter_snr.png.png)
 
 ---
 
@@ -61,23 +61,23 @@ The Kaiser window was selected over Hamming or Hanning because its β parameter 
 
 ### 5.2 Frequency Response
 
-![Filter Frequency Response](../results/filter_design/filter_frequency_response.png)
+![Filter Frequency Response](assets/filter_frequency_response.png.png)
 
 -3 dB cutoffs confirmed at 8.66 Hz and 12.11 Hz, consistent with data-derived specification.
 
 ### 5.3 Linear Phase Verification
 
-![Group Delay](../results/verification/group_delay_linear_phase.png)
+![Group Delay](assets/group_delay_linear_phase.png.png)
 
 Group delay is constant at 78 samples across all frequencies, confirming Type I linear phase FIR. Analytical prediction: (N-1)/2 = (157-1)/2 = 78. Matches exactly. R5 satisfied.
 
 ### 5.4 Specification Compliance Audit
 
-![Compliance Audit](../results/verification/filter_spec_compliance.png)
+![Compliance Audit](assets/filter_spec_compliance.png.png)
 
 All sidelobes remain below -60 dB. Passband ripple within ±1 dB. R3 and R4 satisfied.
 
-![Passband Zoom](../results/verification/passband_spectral_zoom.png)
+![Passband Zoom](assets/passband_spectral_zoom.png.png)
 
 ---
 
@@ -87,19 +87,19 @@ All sidelobes remain below -60 dB. Passband ripple within ±1 dB. R3 and R4 sati
 
 Float64 Kaiser coefficients were quantized to Q15 format (int16, 16-bit signed fixed-point, 15 fractional bits). The LSB step size at Q15 is Δ = 2⁻¹⁵ = 3.05e-05.
 
-![Coefficient Comparison](../results/quantization/analytical_vs_reconstructed_coefficients.png)
+![Coefficient Comparison](assets/analytical_vs_reconstructed_coefficients.png.png)
 
 All 157 per-tap absolute errors remain within the Q15 LSB bound. Inset magnification at taps 75–85 confirms float and Q15 representations are visually indistinguishable at the center tap region.
 
 ### 6.2 Frequency Response Deviation
 
-![Magnitude Comparison](../results/filter_design/magnitude_profile_comparison.png)
+![Magnitude Comparison](assets/frequency%20response%20of%20the%20quantized%20filter%20and%20qunatized%20induced%20magnitude%20deviation.png)
 
 Q15 and float64 magnitude responses overlap throughout the passband. Quantization-induced deviation is bounded within ±0.0025 dB across the passband. Sidelobe deviation visible at null points (expected at near-zero gain) — no functional impact. R6 and R8 satisfied.
 
 ### 6.3 High Relative Error Taps
 
-![High Error Taps](../results/quantization/high_relative_error_taps.png)
+![High Error Taps](assets/high_relative_error_taps.png.png)
 
 Taps [0, 5, 28, 128, 151, 156] show high relative quantization error because their float64 values are near zero — small absolute error produces high relative error. This is expected behaviour for windowed FIR edge taps and has no meaningful effect on frequency response.
 
@@ -121,17 +121,17 @@ Coefficients exported as both float64 and int16 in `filter_coefficients.mat` for
 
 ### 7.3 Kaiser Coefficients and Impulse Response
 
-![Coefficients and Impulse](../results/verification/kaiser_coefficients_impulse.png)
+![Coefficients and Impulse](assets/kaiser_coefficients_impulse.png.png)
 
 Stored coefficients and `apply_fir()` impulse response match: True. Symmetric about tap 78. R7 satisfied.
 
 ### 7.4 Step Response
 
-![Step Response](../results/verification/step_response.png)
+![Step Response](assets/step_response.png.png)
 
 ### 7.5 Filter Settling Transient
 
-![Settling Transient](../results/verification/settling_transient.png)
+![Settling Transient](assets/settling_transient.png.png)
 
 Filter reaches steady state after 78 samples (487.5 ms at 160 Hz), consistent with group delay. Samples within the transient boundary are flagged and excluded from downstream analysis.
 
@@ -141,17 +141,17 @@ Filter reaches steady state after 78 samples (487.5 ms at 160 Hz), consistent wi
 
 ### 8.1 Time Domain — Filtered Output
 
-![Time Domain Results](../results/results/time_domain_raw_vs_filtered.png)
+![Time Domain Results](assets/time_domain_raw_vs_filtered.png.png)
 
 Raw EEG amplitude range ±250 µV reduced to ±25 µV mu-band signal at C3, C4, and Cz. Broadband noise successfully removed.
 
 ### 8.2 Spatially Averaged Result
 
-![Spatially Averaged](../results/results/spatially_averaged_filtered.png)
+![Spatially Averaged](assets/spatially_averaged_filtered.png.png)
 
 ### 8.3 PSD — Before and After
 
-![PSD Comparison](../results/results/psd_wideband_vs_mu.png)
+![PSD Comparison](assets/psd_wideband_vs_mu.png.png)
 
 Post-filtered PSD shows energy concentrated in the 8–13 Hz band with all other frequencies attenuated by several decades.
 
@@ -159,19 +159,19 @@ Post-filtered PSD shows energy concentrated in the 8–13 Hz band with all other
 
 Surface Laplacian (spherical spline CSD) was applied as a spatial filter to validate that the temporally isolated mu rhythm was also spatially concentrated over motor cortex.
 
-![Surface Laplacian Time Domain](../results/surface_laplacian/c3_raw_vs_laplacian.png)
+![Surface Laplacian Time Domain](assets/c3_raw_vs_laplacian.png.png)
 
-![Surface Laplacian PSD](../results/surface_laplacian/voltage_vs_laplacian_psd.png)
+![Surface Laplacian PSD](assets/voltage_vs_laplacian_psd.png.png)
 
 The Laplacian PSD shows a clear spectral peak in the mu band absent from the voltage reference, confirming source localisation at C3.
 
-![Spatial Power Ratio](../results/surface_laplacian/laplacian_power_ratio.png)
+![Spatial Power Ratio](assets/laplacian_power_ratio.png.png)
 
 Laplacian-to-reference power ratio peaks within the mu passband, confirming spatial concentration of the extracted signal.
 
 ### 8.5 SNR Across Processing Stages
 
-![SNR Stages](../results/results/snr_processing_stages.png)
+![SNR Stages](assets/mu_band%20snr%20across%20processing%20stages.png)
 
 | Stage | Mu-Band SNR |
 |-------|-------------|
