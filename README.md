@@ -17,7 +17,7 @@
 
 **Mu-Band SNR across processing stages:**
 
-![SNR Across Processing Stages](assets/snr_processing_stages.png)
+![SNR Across Processing Stages](assets/mu_band snr across processing stages.png)
 
 The filter improves mu-band SNR from **-7.90 dB** (raw) to **49.31 dB** (filtered), with Surface Laplacian spatial filtering further improving to **55.86 dB**.
 
